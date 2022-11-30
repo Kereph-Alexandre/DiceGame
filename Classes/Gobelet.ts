@@ -23,4 +23,16 @@ export default class Gobelet {
   public set valeurDe(nouvelleValeur: number) {
     this._valeurGobelet = nouvelleValeur;
   }
+
+  /**
+   * Lance la totalité des dés contenus dans le gobelet
+   * @returns la valeur du gobelet
+   */
+  public lancer(): number {
+    this._listeDes.forEach((De) => {
+      De.lancer();
+    });
+
+    return this.valeurGobelet;
+  }
 }
