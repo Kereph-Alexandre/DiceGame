@@ -1,9 +1,5 @@
 export default class De {
-  private _valeurDe: number;
-
-  constructor(valeur: number) {
-    this._valeurDe = valeur;
-  }
+  private _valeurDe: number = 0;
 
   public get valeurDe(): number {
     return this._valeurDe;

@@ -18,6 +18,12 @@ export default class Gobelet {
     this._valeurGobelet = nouvelleValeur;
   }
 
+  public ajouterDes(nombreDes: number): void {
+    for (let index = 0; index < nombreDes; index++) {
+      this._listeDes.push(new De());
+    }
+  }
+
   /**
    * Lance la totalité des dés contenus dans le gobelet
    * @returns la valeur du gobelet
