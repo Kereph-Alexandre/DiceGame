@@ -13,7 +13,7 @@ export default class De {
    * Génère une valeur aléatoire pour le Dé
    * @returns une valeur entre 1 et 6
    */
-  private lancer(): number {
+  public lancer(): number {
     return Math.random() * 5 + 1;
   }
 }

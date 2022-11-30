@@ -11,16 +11,10 @@ export default class Gobelet {
   }
 
   public get valeurGobelet(): number {
-    let valeur: number = 0;
-
-    this._listeDes.forEach((De) => {
-      valeur += De.valeurDe;
-    });
-
-    return valeur;
+    return this._valeurGobelet;
   }
 
-  public set valeurDe(nouvelleValeur: number) {
+  public set valeurGobelet(nouvelleValeur: number) {
     this._valeurGobelet = nouvelleValeur;
   }
 
@@ -33,6 +27,27 @@ export default class Gobelet {
       De.lancer();
     });
 
+    this.mettreAJourValeur();
+
     return this.valeurGobelet;
+  }
+
+  /**
+   * Met a jour la valeur du gobelet
+   */
+  public mettreAJourValeur(): void {
+    let valeur: number = 0;
+
+    this._listeDes.forEach((De) => {
+      valeur += De.valeurDe;
+    });
+
+    this.valeurGobelet = valeur;
+  }
+
+  public afficherScore(): void {
+    console.log(
+      `Ce gobelet contient ${this._listeDes.length} dés d'un score total de ${this.valeurGobelet}`
+    );
   }
 }
