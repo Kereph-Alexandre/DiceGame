@@ -1,5 +1,5 @@
 Prochaine Étape : 
-    DOC!
+    les perfs !
 
 Possibilités : 
     Changer le paramètre 'joueurs' de la méthode 'initialiserPartie' d'une liste vers un spread operator.

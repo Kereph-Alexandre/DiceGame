@@ -1,4 +1,5 @@
 import De from "./De";
+import Joueur from "./Joueur";
 
 export default class Gobelet {
   private _listeDes: De[] = [];
@@ -56,9 +57,7 @@ export default class Gobelet {
   /**
    * affiche le nombre de dés dans le gobelet et le score obtenu lors du dernier lancé
    */
-  public afficherScore(): void {
-    console.log(
-      `Ce gobelet contient ${this.nombreDesGobelet} dés d'un score total de ${this.valeurGobelet}`
-    );
+  public afficherScore(joueur: Joueur): void {
+    console.log(`${joueur.nom} obtient un score de ${this.valeurGobelet}`);
   }
 }

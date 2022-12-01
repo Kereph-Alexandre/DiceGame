@@ -37,13 +37,12 @@ export default class Joueur {
     gobelet.lancer();
 
     this.score = gobelet.valeurGobelet;
-    this.afficherScore();
   }
 
   /**
    * affiche le nom du joueur et le score obtenu sur cette manche
    */
-  private afficherScore(): void {
-    console.log(`${this.nom} a obtenu un score de ${this.score}`);
+  public afficherScore(): void {
+    console.log(`${this.nom} a remporté ${this.point} manches`);
   }
 }

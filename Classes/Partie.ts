@@ -30,7 +30,7 @@ export default class Partie {
    */
   public initialiserPartie(joueurs: Joueur[], nombreManche: number): void {
     //On prend le nombre de joueurs et on les intègres aux joueurs de la partie
-    console.log(`Initialisation de la partie`);
+    console.log(`\n Initialisation de la partie`);
     this.integrerJoueursPartie(joueurs);
 
     //On vérifie si le nombre de manches est cohérent avec le nombre de joueurs
@@ -41,11 +41,9 @@ export default class Partie {
 
     //On a un gobelet
     //On a besoin de X Dés pour X Joueurs
-    console.log(`Création de ${this._listeJoueurs.length} dés`);
     this._gobelet.ajouterDes(this.nombreJoueur);
 
     //On reset les scores des joueurs
-    console.log(`Réinitialisation des scores des joueurs`);
     this.resetScore();
   }
 
@@ -65,7 +63,7 @@ export default class Partie {
    * @returns le nombre de manches corrigé (+1 si nécessaire).
    */
   private VerifierNombreManches(nombreManche: number): number {
-    console.log(`Nombre de manches souhaitées : ${nombreManche}`);
+    console.log(`Nombre de manches souhaitées : ${nombreManche} \n`);
 
     //Si nombre de Joueurs pair et nombre de Manches Pair OU nbJoueur Impair et nbManches Impair
     //nombre de Manches +1
@@ -96,7 +94,7 @@ export default class Partie {
     for (let indexTour = 1; indexTour <= this.nombreTours; indexTour++) {
       this.resetScore();
       this.effectuerTour();
-      console.log(`Fin du tour n°${indexTour}`);
+      console.log(`\n Fin du tour n°${indexTour} \n`);
     }
 
     //Afficher le nombre de manches gagnées par chaque joueur
@@ -113,6 +111,7 @@ export default class Partie {
     //Chaque joueur lance le gobelet (et lance donc les dés qu'il contient)
     this._listeJoueurs.forEach((joueur) => {
       joueur.jouer(this._gobelet);
+      this._gobelet.afficherScore(joueur);
     });
 
     //On détermine le vainqueur de la manque
@@ -212,13 +211,9 @@ export default class Partie {
     let plusGrandNombrePoints: number =
       this.derterminerPlusGrandNombrePoints(joueurs);
 
-    console.log(plusGrandNombrePoints);
-
     //On trouve tous les joueurs avec le plus de manches gagnée
     let nomines: Joueur[] = [];
     this.reunirJoueursPoints(joueurs, plusGrandNombrePoints, nomines);
-
-    console.log(nomines);
 
     if (nomines.length > 1) {
       console.log(
@@ -261,7 +256,7 @@ export default class Partie {
    */
   private afficherGagnant(gagnant: Joueur): void {
     console.log(
-      `Nous avons un Gagnant. ${gagnant.nom} remporte la partie en remportant ${gagnant.point} manches.`
+      `\n Nous avons un Gagnant. \n ${gagnant.nom} remporte la partie en remportant ${gagnant.point} manches.`
     );
   }
 
@@ -270,7 +265,7 @@ export default class Partie {
    */
   private afficherScoresFinaux(): void {
     this._listeJoueurs.forEach((joueur) => {
-      console.log(`Score de ${joueur.nom} : ${joueur.point}`);
+      joueur.afficherScore();
     });
   }
 }
