@@ -1,2 +1,6 @@
 Prochaine Étape : 
-    DOC! et commentaire de structure.
+    Gérer le nombre de tours
+
+Possibilités : 
+    Changer le paramètre 'joueurs' de la méthode 'initialiserPartie' d'une liste vers un spread operator.
+    Il faudra faire le même changement dans la méthode 'integrerJoueursPartie'

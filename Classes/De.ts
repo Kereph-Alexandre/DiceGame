@@ -11,6 +11,5 @@ export default class De {
    */
   public lancer(): void {
     this._valeurDe = Math.trunc(Math.random() * 5 + 1);
-    // console.log(this.valeurDe);
   }
 }

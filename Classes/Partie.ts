@@ -23,14 +23,17 @@ export default class Partie {
     this._nombreTours = nombreManche;
   }
 
+  /**
+   * Initialise une partie : intègre les joueurs, corrige le nombre de manche nécessaire, créée les dés et réinitialise les scores de chaque joueur.
+   * @param joueurs liste des joueurs présent pour la partie.
+   * @param nombreManche nombre de manche souhaité pour départager les joueurs.
+   */
   public initialiserPartie(joueurs: Joueur[], nombreManche: number): void {
     //On prend le nombre de joueurs et on les intègres aux joueurs de la partie
     console.log(`Initialisation de la partie`);
     this.integrerJoueursPartie(joueurs);
 
     //On vérifie si le nombre de manches est cohérent avec le nombre de joueurs
-    //Si nbJoueurs pair et nbManches Pair OU nbJoueur Impair et nbManches Impair
-    //nbManches +1
     console.log(`Vérification du nombre de manches`);
     this.nombreTours = this.VerifierNombreManches(nombreManche);
 
@@ -42,11 +45,14 @@ export default class Partie {
     this._gobelet.ajouterDes(this.nombreJoueur);
 
     //On reset les scores des joueurs
-
     console.log(`Réinitialisation des scores des joueurs`);
     this.resetScore();
   }
 
+  /**
+   * Inclue les joueurs présents à la liste des joueurs De la partie.
+   * @param joueurs liste des joueurs.
+   */
   private integrerJoueursPartie(joueurs: Joueur[]): void {
     joueurs.forEach((joueur) => {
       this._listeJoueurs.push(joueur);
@@ -55,9 +61,16 @@ export default class Partie {
     console.log(`La partie intègre ${this._listeJoueurs.length} joueurs`);
   }
 
+  /**
+   * Vérifie que le nombre de manche jouée puisse faire ressortir un vainqueur net.
+   * @param nombreManche nombre de manches souhaitée par les joueurs.
+   * @returns le nombre de manches corrigé (+1 si nécessaire).
+   */
   private VerifierNombreManches(nombreManche: number): number {
     console.log(`Nombre de manches souhaitées : ${nombreManche}`);
 
+    //Si nombre de Joueurs pair et nombre de Manches Pair OU nbJoueur Impair et nbManches Impair
+    //nombre de Manches +1
     const nombreJoueur: number = this.nombreJoueur;
     if (
       (nombreJoueur % 2 == 0 && nombreManche % 2 == 0) ||
@@ -75,30 +88,35 @@ export default class Partie {
     }
   }
 
+  /**
+   * Réinitialise le score de chaque joueur.
+   */
   public resetScore(): void {
     this._listeJoueurs.forEach((joueur) => {
       joueur.score = 0;
     });
   }
 
+  /**
+   * Lance le processus de déroulement d'une partie.
+   */
   public lancerPartie(): void {
-    //On prend le premier joueur
-    //On lance les dés du gobelet (Class Gobelet)
-    // On lance les dés un a un (Class Dé)
-    //On récupère la valeur du gobelet
-    //On affecte la valeur du gobelet au Joueur
+    //Chaque joueur lance le gobelet (et lance donc les dés qu'il contient)
     this._listeJoueurs.forEach((joueur) => {
       joueur.jouer(this._gobelet);
     });
 
+    //On détermine le vainqueur de la manque
     this.determinerVainqueurManche(this._listeJoueurs);
-    //On passe au joueur suivant
 
     //Tous les joueurs = 1tour
     //On repete pour le nombre de tours
   }
 
-  //Rechercher Array.reduce?
+  /**
+   * Détermine le(s) joueur(s) avec le plus haut score sur la manche et les faits rejouer s'ils sont plusieurs.
+   * @param joueurs Liste des joueurs encore en possibilité de remporter la manche.
+   */
   public determinerVainqueurManche(joueurs: Joueur[]): void {
     //On trouve le plus grand score
     let plusGrandScoreManche: number = this.determinerPlusGrandeValeur(joueurs);
@@ -115,6 +133,7 @@ export default class Partie {
     );
 
     //On fait rejouer les joueurs avec le meme score
+    //Si le joueur est seul, il gagne la manche
     if (listeVainqueursPotentiels.length > 1) {
       listeVainqueursPotentiels.forEach((joueur) => {
         console.log(`${joueur.nom} rejoue.`);
@@ -132,6 +151,11 @@ export default class Partie {
     }
   }
 
+  /**
+   * Parcours la liste des joueurs présents pour trouver le plus haut score réalisé cette manche.
+   * @param joueurs liste des joueurs pouvant remporter la manche.
+   * @returns le plus haut score réalisé.
+   */
   private determinerPlusGrandeValeur(joueurs: Joueur[]): number {
     //On stock le score du premier joueur comme étant la plus grand pour l'instant
     let plusGrandScore = joueurs[0].score;
@@ -146,6 +170,12 @@ export default class Partie {
     return plusGrandScore;
   }
 
+  /**
+   * Mets à part les joueurs ayant réalisé le plus haut score de la partie.
+   * @param joueursEnLice Joueurs ayant joué ce tour.
+   * @param plusGrandScore Score maximal réalisé ce tour.
+   * @param vainqueursPotentiels Joueurs pouvant gagner le tour.
+   */
   private reunirJoueursHautScore(
     joueursEnLice: Joueur[],
     plusGrandScore: number,

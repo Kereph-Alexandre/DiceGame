@@ -16,6 +16,10 @@ export default class Gobelet {
     this._valeurGobelet = nouvelleValeur;
   }
 
+  /**
+   * Créer un nombre de dés dans le gobelet
+   * @param nombreDes nombre de dés a créer
+   */
   public ajouterDes(nombreDes: number): void {
     for (let index = 0; index < nombreDes; index++) {
       this._listeDes.push(new De());
@@ -51,6 +55,9 @@ export default class Gobelet {
     this.valeurGobelet = valeur;
   }
 
+  /**
+   * affiche le nombre de dés dans le gobelet et le score obtenu lors du dernier lancé
+   */
   public afficherScore(): void {
     console.log(
       `Ce gobelet contient ${this.nombreDesGobelet} dés d'un score total de ${this.valeurGobelet}`
