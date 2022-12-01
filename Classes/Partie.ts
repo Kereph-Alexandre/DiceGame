@@ -107,6 +107,9 @@ export default class Partie {
       this.effectuerTour();
       console.log(`Fin du tour n°${indexTour}`);
     }
+
+    //On détermine le vainqueur de la partie
+    this.determinerVainqueurPartie(this._listeJoueurs);
   }
 
   /**
@@ -128,7 +131,8 @@ export default class Partie {
    */
   private determinerVainqueurManche(joueurs: Joueur[]): void {
     //On trouve le plus grand score
-    let plusGrandScoreManche: number = this.determinerPlusGrandeValeur(joueurs);
+    const plusGrandScoreManche: number =
+      this.determinerPlusGrandeValeur(joueurs);
     console.log(
       `Le plus haut score cette manche est de ${plusGrandScoreManche}`
     );
@@ -195,5 +199,47 @@ export default class Partie {
         vainqueursPotentiels.push(joueur);
       }
     });
+  }
+
+  private determinerVainqueurPartie(joueurs: Joueur[]): void {
+    const plusGrandNombrePoints: number =
+      this.derterminerPlusGrandNombrePoints(joueurs);
+
+    //On trouve tous les joueurs avec le plus de manches gagnée
+    let nomines: Joueur[] = [];
+    this.reunirJoueursHautScore(joueurs, plusGrandNombrePoints, nomines);
+
+    if (nomines.length > 1) {
+      console.log(
+        `Plusieurs joueurs sont a égalité en nombre de manches gagnées (${plusGrandNombrePoints})`
+      );
+
+      nomines.forEach((joueur) => {
+        console.log(`${joueur.nom} rejoue.`);
+        joueur.jouer(this._gobelet);
+      });
+      this.determinerVainqueurManche(nomines);
+      this.determinerVainqueurPartie(nomines);
+    } else {
+      this.afficherGagnant(nomines[0]);
+    }
+  }
+
+  private derterminerPlusGrandNombrePoints(joueurs: Joueur[]): number {
+    let plusGrandNombrePoints: number = joueurs[0].point;
+
+    joueurs.forEach((joueur) => {
+      if (joueur.point > plusGrandNombrePoints) {
+        plusGrandNombrePoints = joueur.point;
+      }
+    });
+
+    return plusGrandNombrePoints;
+  }
+
+  private afficherGagnant(gagnant: Joueur): void {
+    console.log(
+      `Nous avons un Gagnant. ${gagnant.nom} remporte la partie en remportant ${gagnant.point} manches.`
+    );
   }
 }

@@ -33,7 +33,6 @@ export default class Gobelet {
    */
   public lancer(): number {
     this._listeDes.forEach((De) => {
-      console.log(`Lancement du dé ${this._listeDes.indexOf(De) + 1}`);
       De.lancer();
     });
 

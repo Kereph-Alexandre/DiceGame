@@ -4,3 +4,5 @@ Prochaine Étape :
 Possibilités : 
     Changer le paramètre 'joueurs' de la méthode 'initialiserPartie' d'une liste vers un spread operator.
     Il faudra faire le même changement dans la méthode 'integrerJoueursPartie'
+
+    changer les boucles foreach des méthodes DeterminerPLusGrandScore/Point par Math.Max.Apply
