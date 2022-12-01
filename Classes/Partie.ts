@@ -2,7 +2,7 @@ import Gobelet from "./Gobelet";
 import Joueur from "./Joueur";
 
 export default class Partie {
-  private _nombreTours: number;
+  private _nombreTours: number = 1;
 
   private _gobelet: Gobelet;
   private _listeJoueurs: Joueur[] = [];
@@ -25,37 +25,52 @@ export default class Partie {
 
   public initialiserPartie(joueurs: Joueur[], nombreManche: number): void {
     //On prend le nombre de joueurs et on les intègres aux joueurs de la partie
+    console.log(`Initialisation de la partie`);
     this.integrerJoueursPartie(joueurs);
 
     //On vérifie si le nombre de manches est cohérent avec le nombre de joueurs
     //Si nbJoueurs pair et nbManches Pair OU nbJoueur Impair et nbManches Impair
     //nbManches +1
+    console.log(`Vérification du nombre de manches`);
     this.nombreTours = this.VerifierNombreManches(nombreManche);
 
     //On peut lancer la partie
 
     //On a un gobelet
     //On a besoin de X Dés pour X Joueurs
+    console.log(`Créatiion de ${this._listeJoueurs.length} dés`);
     this._gobelet.ajouterDes(this.nombreJoueur);
 
     //On reset les scores des joueurs
+
+    console.log(`Réinitialisation des scores des joueurs`);
     this.resetScore();
   }
 
-  public integrerJoueursPartie(joueurs: Joueur[]): void {
+  private integrerJoueursPartie(joueurs: Joueur[]): void {
     joueurs.forEach((joueur) => {
       this._listeJoueurs.push(joueur);
     });
+
+    console.log(`La partie intègre ${this._listeJoueurs.length} joueurs`);
   }
 
-  public VerifierNombreManches(nombreManche: number): number {
+  private VerifierNombreManches(nombreManche: number): number {
+    console.log(`Nombre de manches souhaitées : ${nombreManche}`);
+
     const nombreJoueur: number = this.nombreJoueur;
     if (
       (nombreJoueur % 2 == 0 && nombreManche % 2 == 0) ||
       (nombreJoueur % 2 == 1 && nombreManche % 2 == 1)
     ) {
-      return nombreManche++;
+      console.log(
+        `Le nombre de joueur ne convient pas au nombre de manche souhaité, incrémentation du nombre de manche. `
+      );
+      console.log(`Nombre de manches souhaitées : ${nombreManche + 1}`);
+      return nombreManche + 1;
     } else {
+      console.log(`Le nombre de joueur et de manche convient.`);
+      console.log(`Nombre de manches souhaitées : ${nombreManche}`);
       return nombreManche;
     }
   }

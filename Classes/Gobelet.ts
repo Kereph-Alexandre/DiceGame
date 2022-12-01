@@ -2,13 +2,13 @@ import De from "./De";
 
 export default class Gobelet {
   private _listeDes: De[] = [];
-  private _valeurGobelet: number;
+  private _valeurGobelet: number = 0;
 
-  constructor() {
-    this._listeDes.forEach((De) => {
-      this._valeurGobelet += De.valeurDe;
-    });
-  }
+  // constructor() {
+  //   this._listeDes.forEach((De) => {
+  //     this._valeurGobelet += De.valeurDe;
+  //   });
+  // }
 
   public get valeurGobelet(): number {
     return this._valeurGobelet;
@@ -22,6 +22,7 @@ export default class Gobelet {
     for (let index = 0; index < nombreDes; index++) {
       this._listeDes.push(new De());
     }
+    console.log(`Ce gobelet contient maintenant ${this._listeDes.length} dés`);
   }
 
   /**
