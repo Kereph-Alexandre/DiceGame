@@ -185,6 +185,13 @@ export default class Partie {
       }
     });
   }
+
+  /**
+   * Mets a parts les joueurs ayant remporté le plus de manches.
+   * @param joueursEnLice liste des joueurs de la partie.
+   * @param plusGrandScore Le plus grand nombre de manche remporté.
+   * @param vainqueursPotentiels Liste des joueur ayant remporté autant de manches.
+   */
   private reunirJoueursPoints(
     joueursEnLice: Joueur[],
     plusGrandScore: number,
@@ -197,6 +204,10 @@ export default class Partie {
     });
   }
 
+  /**
+   * Isole le joueur avec le plus de manche remportées, fait rejouer les joueurs à égalité.
+   * @param joueurs Liste des joueurs de la partie.
+   */
   private determinerVainqueurPartie(joueurs: Joueur[]): void {
     let plusGrandNombrePoints: number =
       this.derterminerPlusGrandNombrePoints(joueurs);
@@ -227,6 +238,11 @@ export default class Partie {
     }
   }
 
+  /**
+   * Détermine le plus grand nombre de manches remporté dans la partie.
+   * @param joueurs Liste des joueurs concernés.
+   * @returns le plus grand nombre de manches remportées
+   */
   private derterminerPlusGrandNombrePoints(joueurs: Joueur[]): number {
     let plusGrandNombrePoints: number = joueurs[0].point;
 
@@ -239,12 +255,19 @@ export default class Partie {
     return plusGrandNombrePoints;
   }
 
+  /**
+   * Affiche le nom et le nombre de points du gagnant.
+   * @param gagnant le gagnant de la partie.
+   */
   private afficherGagnant(gagnant: Joueur): void {
     console.log(
       `Nous avons un Gagnant. ${gagnant.nom} remporte la partie en remportant ${gagnant.point} manches.`
     );
   }
 
+  /**
+   * Affiche les noms et nombres de points de chaque joueur.
+   */
   private afficherScoresFinaux(): void {
     this._listeJoueurs.forEach((joueur) => {
       console.log(`Score de ${joueur.nom} : ${joueur.point}`);

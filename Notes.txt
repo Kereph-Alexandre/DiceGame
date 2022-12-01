@@ -6,3 +6,7 @@ Possibilités :
     Il faudra faire le même changement dans la méthode 'integrerJoueursPartie'
 
     changer les boucles foreach des méthodes DeterminerPLusGrandScore/Point par Math.Max.Apply
+
+    Changer le fonctionnement de lancement de dé (lancer X fois 1 Dé, plutot que 1 fois X Dés)
+
+    Refactorisation ++
