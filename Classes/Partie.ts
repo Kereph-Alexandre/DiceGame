@@ -57,8 +57,6 @@ export default class Partie {
     joueurs.forEach((joueur) => {
       this._listeJoueurs.push(joueur);
     });
-
-    console.log(`La partie intègre ${this._listeJoueurs.length} joueurs`);
   }
 
   /**
@@ -76,14 +74,8 @@ export default class Partie {
       (nombreJoueur % 2 == 0 && nombreManche % 2 == 0) ||
       (nombreJoueur % 2 == 1 && nombreManche % 2 == 1)
     ) {
-      console.log(
-        `Le nombre de joueur ne convient pas au nombre de manche souhaité, incrémentation du nombre de manche. `
-      );
-      console.log(`Nombre de manches souhaitées : ${nombreManche + 1}`);
       return nombreManche + 1;
     } else {
-      console.log(`Le nombre de joueur et de manche convient.`);
-      console.log(`Nombre de manches souhaitées : ${nombreManche}`);
       return nombreManche;
     }
   }
@@ -102,11 +94,13 @@ export default class Partie {
    */
   public lancerPartie(): void {
     for (let indexTour = 1; indexTour <= this.nombreTours; indexTour++) {
-      console.log(`Début du tour n°${indexTour} : réinitialisation des score`);
       this.resetScore();
       this.effectuerTour();
       console.log(`Fin du tour n°${indexTour}`);
     }
+
+    //Afficher le nombre de manches gagnées par chaque joueur
+    this.afficherScoresFinaux();
 
     //On détermine le vainqueur de la partie
     this.determinerVainqueurPartie(this._listeJoueurs);
@@ -133,9 +127,6 @@ export default class Partie {
     //On trouve le plus grand score
     const plusGrandScoreManche: number =
       this.determinerPlusGrandeValeur(joueurs);
-    console.log(
-      `Le plus haut score cette manche est de ${plusGrandScoreManche}`
-    );
 
     //On trouve tous les joueurs avec le plus Haut score
     let listeVainqueursPotentiels: Joueur[] = [];
@@ -149,18 +140,12 @@ export default class Partie {
     //Si le joueur est seul, il gagne la manche
     if (listeVainqueursPotentiels.length > 1) {
       listeVainqueursPotentiels.forEach((joueur) => {
-        console.log(`${joueur.nom} rejoue.`);
         joueur.jouer(this._gobelet);
       });
       this.determinerVainqueurManche(listeVainqueursPotentiels);
     } else {
-      console.log(
-        `${listeVainqueursPotentiels[0].nom} gagne la manche, il/elle avait un score de : ${listeVainqueursPotentiels[0].point}`
-      );
+      console.log(`${listeVainqueursPotentiels[0].nom} gagne la manche`);
       listeVainqueursPotentiels[0].point += 1;
-      console.log(
-        `${listeVainqueursPotentiels[0].nom} a maintenant un score de : ${listeVainqueursPotentiels[0].point}`
-      );
     }
   }
 
@@ -200,14 +185,29 @@ export default class Partie {
       }
     });
   }
+  private reunirJoueursPoints(
+    joueursEnLice: Joueur[],
+    plusGrandScore: number,
+    vainqueursPotentiels: Joueur[]
+  ): void {
+    joueursEnLice.forEach((joueur) => {
+      if (joueur.point === plusGrandScore) {
+        vainqueursPotentiels.push(joueur);
+      }
+    });
+  }
 
   private determinerVainqueurPartie(joueurs: Joueur[]): void {
-    const plusGrandNombrePoints: number =
+    let plusGrandNombrePoints: number =
       this.derterminerPlusGrandNombrePoints(joueurs);
+
+    console.log(plusGrandNombrePoints);
 
     //On trouve tous les joueurs avec le plus de manches gagnée
     let nomines: Joueur[] = [];
-    this.reunirJoueursHautScore(joueurs, plusGrandNombrePoints, nomines);
+    this.reunirJoueursPoints(joueurs, plusGrandNombrePoints, nomines);
+
+    console.log(nomines);
 
     if (nomines.length > 1) {
       console.log(
@@ -220,8 +220,10 @@ export default class Partie {
       });
       this.determinerVainqueurManche(nomines);
       this.determinerVainqueurPartie(nomines);
-    } else {
+    } else if (nomines.length > 0) {
       this.afficherGagnant(nomines[0]);
+    } else {
+      throw new Error(`Il n'y a pas de joueur dans la liste des gagnants`);
     }
   }
 
@@ -241,5 +243,11 @@ export default class Partie {
     console.log(
       `Nous avons un Gagnant. ${gagnant.nom} remporte la partie en remportant ${gagnant.point} manches.`
     );
+  }
+
+  private afficherScoresFinaux(): void {
+    this._listeJoueurs.forEach((joueur) => {
+      console.log(`Score de ${joueur.nom} : ${joueur.point}`);
+    });
   }
 }

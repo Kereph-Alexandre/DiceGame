@@ -24,7 +24,6 @@ export default class Gobelet {
     for (let index = 0; index < nombreDes; index++) {
       this._listeDes.push(new De());
     }
-    console.log(`Ce gobelet contient maintenant ${this.nombreDesGobelet} dés`);
   }
 
   /**
