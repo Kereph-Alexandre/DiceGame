@@ -9,12 +9,14 @@ const partie: Partie = new Partie(gobelet);
 
 const joueur1: Joueur = new Joueur("Patricia");
 const joueur2: Joueur = new Joueur("Corrine");
-const joueur3: Joueur = new Joueur("Léa");
-const joueur4: Joueur = new Joueur("Jeaninne");
-const joueur5: Joueur = new Joueur("Chloé");
+// const joueur3: Joueur = new Joueur("Léa");
+// const joueur4: Joueur = new Joueur("Jeaninne");
+// const joueur5: Joueur = new Joueur("Chloé");
 
-let joueurs: Joueur[] = [joueur1, joueur2, joueur3, joueur4, joueur5];
+let joueurs: Joueur[] = [joueur1, joueur2];
 
 partie.initialiserPartie(joueurs, 5);
 console.log(partie);
 console.log(gobelet);
+
+partie.lancerPartie();

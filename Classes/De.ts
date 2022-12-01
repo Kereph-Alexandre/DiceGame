@@ -9,7 +9,8 @@ export default class De {
    * Génère une valeur aléatoire pour le Dé
    * @returns une valeur entre 1 et 6
    */
-  public lancer(): number {
-    return Math.random() * 5 + 1;
+  public lancer(): void {
+    this._valeurDe = Math.trunc(Math.random() * 5 + 1);
+    // console.log(this.valeurDe);
   }
 }

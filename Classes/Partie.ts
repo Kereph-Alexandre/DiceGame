@@ -90,17 +90,71 @@ export default class Partie {
     this._listeJoueurs.forEach((joueur) => {
       joueur.jouer(this._gobelet);
     });
+
+    this.determinerVainqueurManche(this._listeJoueurs);
     //On passe au joueur suivant
 
     //Tous les joueurs = 1tour
     //On repete pour le nombre de tours
   }
 
-  public determinerVainqueurManche(): void {
-    //Rechercher Array.reduce
-    //Pour Chacun des joueurs
-    //on compare les score
-    //Le joueur avec le score le plus élevé
-    //nombrePoints +1
+  //Rechercher Array.reduce?
+  public determinerVainqueurManche(joueurs: Joueur[]): void {
+    //On trouve le plus grand score
+    let plusGrandScoreManche: number = this.determinerPlusGrandeValeur(joueurs);
+    console.log(
+      `Le plus haut score cette manche est de ${plusGrandScoreManche}`
+    );
+
+    //On trouve tous les joueurs avec le plus Haut score
+    let listeVainqueursPotentiels: Joueur[] = [];
+    this.reunirJoueursHautScore(
+      joueurs,
+      plusGrandScoreManche,
+      listeVainqueursPotentiels
+    );
+
+    //On fait rejouer les joueurs avec le meme score
+    if (listeVainqueursPotentiels.length > 1) {
+      listeVainqueursPotentiels.forEach((joueur) => {
+        console.log(`${joueur.nom} rejoue.`);
+        joueur.jouer(this._gobelet);
+      });
+      this.determinerVainqueurManche(listeVainqueursPotentiels);
+    } else {
+      console.log(
+        `${listeVainqueursPotentiels[0].nom} gagne la manche, il/elle avait un score de : ${listeVainqueursPotentiels[0].point}`
+      );
+      listeVainqueursPotentiels[0].point += 1;
+      console.log(
+        `${listeVainqueursPotentiels[0].nom} a maintenant un score de : ${listeVainqueursPotentiels[0].point}`
+      );
+    }
+  }
+
+  private determinerPlusGrandeValeur(joueurs: Joueur[]): number {
+    //On stock le score du premier joueur comme étant la plus grand pour l'instant
+    let plusGrandScore = joueurs[0].score;
+
+    //On parcours la liste des joueurs
+    joueurs.forEach((joueur) => {
+      if (joueur.score > plusGrandScore) {
+        plusGrandScore = joueur.score;
+      }
+    });
+
+    return plusGrandScore;
+  }
+
+  private reunirJoueursHautScore(
+    joueursEnLice: Joueur[],
+    plusGrandScore: number,
+    vainqueursPotentiels: Joueur[]
+  ): void {
+    joueursEnLice.forEach((joueur) => {
+      if (joueur.score === plusGrandScore) {
+        vainqueursPotentiels.push(joueur);
+      }
+    });
   }
 }

@@ -34,6 +34,7 @@ export default class Joueur {
    * @param gobelet le gobelet de la partie
    */
   public jouer(gobelet: Gobelet): void {
+    console.log(`lancement du gobelet avec ${gobelet.nombreDesGobelet}`);
     gobelet.lancer();
 
     this.score = gobelet.valeurGobelet;

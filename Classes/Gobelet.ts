@@ -4,14 +4,12 @@ export default class Gobelet {
   private _listeDes: De[] = [];
   private _valeurGobelet: number = 0;
 
-  // constructor() {
-  //   this._listeDes.forEach((De) => {
-  //     this._valeurGobelet += De.valeurDe;
-  //   });
-  // }
-
   public get valeurGobelet(): number {
     return this._valeurGobelet;
+  }
+
+  public get nombreDesGobelet(): number {
+    return this._listeDes.length;
   }
 
   public set valeurGobelet(nouvelleValeur: number) {
@@ -22,7 +20,7 @@ export default class Gobelet {
     for (let index = 0; index < nombreDes; index++) {
       this._listeDes.push(new De());
     }
-    console.log(`Ce gobelet contient maintenant ${this._listeDes.length} dés`);
+    console.log(`Ce gobelet contient maintenant ${this.nombreDesGobelet} dés`);
   }
 
   /**
@@ -31,6 +29,7 @@ export default class Gobelet {
    */
   public lancer(): number {
     this._listeDes.forEach((De) => {
+      console.log(`Lancement du dé ${this._listeDes.indexOf(De) + 1}`);
       De.lancer();
     });
 
@@ -54,7 +53,7 @@ export default class Gobelet {
 
   public afficherScore(): void {
     console.log(
-      `Ce gobelet contient ${this._listeDes.length} dés d'un score total de ${this.valeurGobelet}`
+      `Ce gobelet contient ${this.nombreDesGobelet} dés d'un score total de ${this.valeurGobelet}`
     );
   }
 }
