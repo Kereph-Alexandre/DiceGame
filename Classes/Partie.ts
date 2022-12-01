@@ -109,6 +109,9 @@ export default class Partie {
     }
   }
 
+  /**
+   * Effectue les actions nécessaire au déroulement d'un tour : Jouer et déterminer le vainqueur.
+   */
   private effectuerTour(): void {
     //Chaque joueur lance le gobelet (et lance donc les dés qu'il contient)
     this._listeJoueurs.forEach((joueur) => {

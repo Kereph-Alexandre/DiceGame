@@ -1,5 +1,5 @@
 Prochaine Étape : 
-    Gérer le nombre de tours
+    Déterminer le vainqueur
 
 Possibilités : 
     Changer le paramètre 'joueurs' de la méthode 'initialiserPartie' d'une liste vers un spread operator.
