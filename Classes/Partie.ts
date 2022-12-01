@@ -12,7 +12,7 @@ export default class Partie {
   }
 
   public get nombreTours(): number {
-    return this.nombreTours;
+    return this._nombreTours;
   }
 
   public get nombreJoueur(): number {
@@ -41,7 +41,7 @@ export default class Partie {
 
     //On a un gobelet
     //On a besoin de X Dés pour X Joueurs
-    console.log(`Créatiion de ${this._listeJoueurs.length} dés`);
+    console.log(`Création de ${this._listeJoueurs.length} dés`);
     this._gobelet.ajouterDes(this.nombreJoueur);
 
     //On reset les scores des joueurs
@@ -101,6 +101,15 @@ export default class Partie {
    * Lance le processus de déroulement d'une partie.
    */
   public lancerPartie(): void {
+    for (let indexTour = 1; indexTour <= this.nombreTours; indexTour++) {
+      console.log(`Début du tour n°${indexTour} : réinitialisation des score`);
+      this.resetScore();
+      this.effectuerTour();
+      console.log(`Fin du tour n°${indexTour}`);
+    }
+  }
+
+  private effectuerTour(): void {
     //Chaque joueur lance le gobelet (et lance donc les dés qu'il contient)
     this._listeJoueurs.forEach((joueur) => {
       joueur.jouer(this._gobelet);
@@ -108,16 +117,13 @@ export default class Partie {
 
     //On détermine le vainqueur de la manque
     this.determinerVainqueurManche(this._listeJoueurs);
-
-    //Tous les joueurs = 1tour
-    //On repete pour le nombre de tours
   }
 
   /**
    * Détermine le(s) joueur(s) avec le plus haut score sur la manche et les faits rejouer s'ils sont plusieurs.
    * @param joueurs Liste des joueurs encore en possibilité de remporter la manche.
    */
-  public determinerVainqueurManche(joueurs: Joueur[]): void {
+  private determinerVainqueurManche(joueurs: Joueur[]): void {
     //On trouve le plus grand score
     let plusGrandScoreManche: number = this.determinerPlusGrandeValeur(joueurs);
     console.log(

@@ -16,7 +16,5 @@ const joueur2: Joueur = new Joueur("Corrine");
 let joueurs: Joueur[] = [joueur1, joueur2];
 
 partie.initialiserPartie(joueurs, 5);
-console.log(partie);
-console.log(gobelet);
 
 partie.lancerPartie();
